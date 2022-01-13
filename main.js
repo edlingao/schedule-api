@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 import helment from 'helmet'
 import userRoute from './routes/user.js'
 import authPosts from './routes/schedule.js'
-
+import cors from 'cors'
 
 const app = express()
 const __dirname = path.resolve(process.cwd(), '.')
@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.json());
 app.use(express.static(`${__dirname}/dist`))
 app.use(helment())
+app.use(cors())
 
 mongoose.connect(`mongodb://localhost:27017`,
     { 
