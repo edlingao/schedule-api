@@ -5,13 +5,15 @@ import UserController from '../controller/user.js'
 import ScheduleController from '../controller/schedule.js'
 
 const { getAllSchedules } = UserController
-const { scheduleDays, create, destroy } = ScheduleController
+const { scheduleDays, create, destroy, edit } = ScheduleController
 
 router.get('/', authUser , getAllSchedules );
 
 router.get('/:day', authUser ,scheduleDays);
 
 router.post('/', authUser, create);
+
+router.put('/:id', authUser, edit);
 
 router.delete('/:id', authUser, destroy);
 
