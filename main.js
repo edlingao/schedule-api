@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import helment from 'helmet'
 import userRoute from './routes/user.js'
 import authPosts from './routes/schedule.js'
+import taskRoutes from './routes/task.js'
 import cors from 'cors'
 
 const app = express()
@@ -40,6 +41,7 @@ app.use(express.json())
 //Midlewares
 app.use('/api/user', userRoute)
 app.use('/api/schedule', authPosts)
+app.use('/api/task', taskRoutes)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

@@ -4,7 +4,20 @@ import { default as ExtendMoment } from 'moment-range';
 const { extendMoment } = ExtendMoment;
 const moment = extendMoment(Moment);
 import { scheduleValidatiom } from '../auth/validation.js'
+import Task from '../models/Task.js';
 export default class ScheduleController{
+
+    static async edit(req, res) {
+        const { id } = req.params
+        const { title } = req.body
+        try {
+            const schedule = await Schedule.findOneAndUpdate({_id: id}, {title: title}, {new: true})
+            res.json(schedule)
+        } catch (err) {
+            res.json(err)
+        }
+    }
+
     static async create(req, res){
 
         const newSchedule = {...req.body, owner: req.user};
@@ -45,8 +58,14 @@ export default class ScheduleController{
         });
     }
     static async destroy(req, res){
-        const response = await Schedule.deleteOne({ _id: req.params.id, owner: req.user })
-        res.json(response)
+        
+        try {
+            const deletedTasks = await Task.deleteMany({tetramino: req.params.id, owner: req.user})
+            const response = await Schedule.deleteOne({ _id: req.params.id, owner: req.user })
+            res.json({response, deletedTasks})
+        } catch(err) {
+            res.json(err)
+        }
     }
     static async update(req, res){
 
